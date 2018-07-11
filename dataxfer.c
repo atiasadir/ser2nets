@@ -689,12 +689,12 @@ static void
 tcp_print_list_impl(tcp_info_t *tcp_list)
 {
     tcp_info_t *tcp = tcp_list;
-    D("[D] tcps:")
+    //D("[D] tcps:")
     while (tcp) {
-	D(" %d (%d, %d)", tcp->tcpfd, tcp->prev ? tcp->prev->tcpfd : 0, tcp->next ? tcp->next->tcpfd : 0)
+	//D(" %d (%d, %d)", tcp->tcpfd, tcp->prev ? tcp->prev->tcpfd : 0, tcp->next ? tcp->next->tcpfd : 0)
 	tcp = tcp->next;
     }
-    D("\n")
+    //D("\n")
 }
 #endif
 
@@ -791,7 +791,7 @@ tcp_remove(port_info_t *port, tcp_info_t *tcp)
 static void
 tcp_shutdown(tcp_info_t *tcp, char *reason)
 {
-    D("tcp %d shutdown: %s\n", tcp->tcpfd, reason)
+    //D("tcp %d shutdown: %s\n", tcp->tcpfd, reason)
     tcp_close(tcp);
     tcp_remove(tcp->port, tcp);
 }
@@ -809,7 +809,7 @@ tcp_set_fd_write_handler(tcp_info_t *tcp, int state)
 	tcp_info_t *t = port->tcp_list;
 	while (t) {
 	    if (t->dev_to_tcp.cursize != 0) {
-		D("tcp %d still has %d\n", t->tcpfd, t->dev_to_tcp.cursize)
+		//D("tcp %d still has %d\n", t->tcpfd, t->dev_to_tcp.cursize)
 		return;
 	    }
 	    t = t->next;
@@ -1224,7 +1224,7 @@ tcp_fd_write(tcp_info_t *tcp, struct sbuf *buf)
     }
     if (buffer_cursize(buf) == 0) {
 	if (PORT_HTTP == port->enabled && HTTP_CLOSING == hd->state) {
-	    D("state: %d\n", hd->state)
+	    //D("state: %d\n", hd->state)
 	    hd->state = HTTP_UNCONNECTED;
 	    shutdown_port(port, tcp, "receive close frame");
 	    return;
@@ -2303,7 +2303,7 @@ shutdown_port(port_info_t *port, tcp_info_t *tcp, char *reason)
 
     if (PORT_IS_FREE(port)) {
 
-    D("shutdown port %s\n", port->portname)
+    //D("shutdown port %s\n", port->portname)
 
     footer_trace(port, reason);
     
